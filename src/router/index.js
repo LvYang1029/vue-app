@@ -12,6 +12,7 @@ import { Toast } from 'vant'
 import store from '../store'
 //地址
 import AddressList from '../views/address/List'
+import AddressEdit from '../views/address/Edit'
 
 
 Vue.use(VueRouter)
@@ -52,6 +53,9 @@ const routes = [
     },{
       path: 'address',
       component: AddressList,
+    },{
+      path: 'address_edit',
+      component: AddressEdit,
     }]
   },
   {

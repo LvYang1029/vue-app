@@ -1,56 +1,47 @@
 <template>
     <briup-fulllayout title="常用地址">
-    {{list}}
-        <van-address-list
-            v-model="chosenAddressId"
-            :list="list"
-            :disabled-list="disabledList"
-            disabled-text="以下地址超出配送范围"
-            default-tag-text="默认"
-            @add="onAdd"
-            @edit="onEdit"
-        />
+    <!-- {{addresses}} -->
+    <!-- {{info}} -->
+    <h3>常用地址：</h3>
+    <van-list>
+        <van-cell
+            v-for="item in addresses"
+            :key="item.id"
+            :title="item.province+' '+item.city+' '+item.area+' '+item.address"
+        ></van-cell>
+    </van-list>
+    <van-button block round plain type="info" @click="toAddressEdit">添加</van-button>
     </briup-fulllayout>
 </template>
+
 <script>
+import {get,post} from '../../http/axios'
+import {mapState} from 'vuex'
 export default {
     data(){
         return{
-            chosenAddressId: '1',
-            list:[],
-            disabledList: [
-            {
-                id: '3',
-                name: '王五',
-                tel: '1320000000',
-                address: '浙江省杭州市滨江区江南大道 15 号'
-            }
-        ],
-            address:{},
+            addresses:[],
         };
     },
     methods:{
         loadAddress(){
-            let id =26;
+            let id =this.info.id;
             let url ="/address/findByCustomerId?id="+id;
             get(url).then((response)=>{
-                this.address =response.data;
-                for (let i in address) {
-                    let o = {};
-                    o[i] = address[i];
-                    list.push(o);
-                }
-
+                this.addresses =response.data;
             })
         },
-        onAdd() {
-            Toast('新增地址');
+        toAddressEdit(){
+            this.$router.push("/manager/address_edit");
         },
-
-        onEdit(item, index) {
-            Toast('编辑地址:' + index);
-        }
     },
+    created(){
+        this.loadAddress();
+    },
+    computed:{ //计算属性
+        //将状态机中的User对象中的info对象中获取到
+        ...mapState("user",["info"]),
+    }
 }
 </script>
 <style scoped>
