@@ -1,5 +1,6 @@
 <template>
-  <div class="product_item">
+<!-- emit意思为发射，将组件上接收到的click事件发射给组件中的click事件 -->
+  <div class="product_item" @click="$emit('click')">
     <van-row>
       <van-col :span="4">
         <img v-if="data.photo" :src="data.photo" alt="">
@@ -15,7 +16,7 @@
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex'
+//import { mapMutations } from 'vuex'
 export default {
   props:['data'],
   data(){
@@ -24,18 +25,18 @@ export default {
     }
   },
   methods:{
-    ...mapMutations('shopcar',['addShopCar']),
-    numberChangeHandler(val){
-      let orderLine = {
-        productId:val.id,
-        productName:val.name,
-        price:val.price,
-        number:val.number
-      }
-      console.log(orderLine);
-      this.addShopCar(orderLine);
+    // ...mapMutations('shopcar',['addShopCar']),
+    // numberChangeHandler(val){
+    //   let orderLine = {
+    //     productId:val.id,
+    //     productName:val.name,
+    //     price:val.price,
+    //     number:val.number
+    //   }
+    //   console.log(orderLine);
+    //   this.addShopCar(orderLine);
       
-    }
+    // }
   }
 }
 </script>
